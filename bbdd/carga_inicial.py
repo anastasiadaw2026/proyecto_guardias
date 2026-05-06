@@ -6,10 +6,19 @@ from lib.profesor import Profesor
 class CargaInicial:
     def __init__(self): # a lo mejor no necesito la conexión
         self._conexion, self._cursor = self._abrir_conexion()
+        #poner aqui el autov¡comit y la conexion dirrecto O NO PARA
+        # GESTIONAR ERRORES
 
     def _vaciar_bbdd(self):
-        vaciar = ('TRUNCATE TABLE PROFESORES')
-        self._cursor.execute(vaciar)
+        vaciar = ['SET FOREIGN_KEY_CHECKS = 0',
+                  'TRUNCATE TABLE AULAS',
+                  'TRUNCATE TABLE PROFESORES',
+                  'TRUNCATE TABLE aulas',
+                  'truncate table cursos',
+                  'truncate table horas',
+                  'SET FOREIGN_KEY_CHECKS = 1']
+        for truncate in vaciar:
+            self._cursor.execute(truncate)
 
     def _abrir_conexion(self):
         # todo: ponerse el try
@@ -22,7 +31,7 @@ class CargaInicial:
     def _generar_profesor(self):
         datos_profesor: list = []
         try:
-            with (open('fichero_delphos', 'r', encoding = 'utf-8') as f):
+            with (open('fichero_delphos_profesores', 'r', encoding ='utf-8') as f):
                 for index, line in enumerate(f.readlines()):
                     if index > 0:
                         datos_profesor = line.strip('"\n').split(',')
@@ -40,11 +49,38 @@ class CargaInicial:
                                 f"'{profesor.clave_encriptada}')")
         self._cursor.execute(aniadir_profesor)
 
+    def cargar_horas(self):
+        with open('horas', mode='r', encoding='utf-8') as f:
+            for hora in f.readlines():
+                aniadir_horas = (f'INSERT INTO HORAS VALUES("{hora.strip()}")')
+                self._cursor.execute(aniadir_horas)
+
+    def cargar_aulas(self):
+        with open('aulas', mode='r', encoding='utf-8') as f:
+            for aula in f.readlines():
+                aniadir_aulas = (f'INSERT INTO aulas VALUES("'
+                                 f'{aula.strip().upper()}")')
+                self._cursor.execute(aniadir_aulas)
+
+    def cargar_cursos(self):
+        with open('cursos.csv', mode='r', encoding='utf-8') as f:
+            for linea in f.readlines():
+                curso, letras = linea.split(',')
+                for letra in letras.split(';'):
+                    aniadir_curso = (f'INSERT INTO cursos VALUES'
+                                     f'("{curso + "-" + letra}")')
+                    print(aniadir_curso)
+                    self._cursor.execute(aniadir_curso)
+
     def _cerrar_conexion(self):
         self._cursor.close()
         self._conexion.close()
 
+
 c = CargaInicial()
 c._vaciar_bbdd()
-c._generar_profesor()
+c.cargar_horas()
+c.cargar_aulas()
+c.cargar_cursos()
+# c.hacer_select()
 c._cerrar_conexion()
