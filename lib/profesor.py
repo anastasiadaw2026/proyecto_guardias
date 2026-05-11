@@ -11,10 +11,7 @@ class Profesor:
         self._clave_encriptada: str = self._encriptar_clave()
 
     def __str__(self):
-        return (f"Nombre: {self._nombre}\n"
-                f"Apellidos: {self._apellidos}\n"
-                f"Usuario: {self._id}\n"
-                f"Clave: {self._clave}\n")
+        return self._nombre + ' ' + self._apellidos
 
     @property
     def nombre(self):

@@ -2,14 +2,18 @@ import mysql.connector
 from mysql.connector import errorcode
 from lib.profesor import Profesor
 
+# Eres tonta? tienes las clases para algo, deberias transformar las clases o
+# algo, a er l¡no tengo ni puta idea que hacer pero oye centra.
+
 
 class CargaInicial:
-    def __init__(self): # a lo mejor no necesito la conexión
-        self._conexion, self._cursor = self._abrir_conexion()
-        #poner aqui el autov¡comit y la conexion dirrecto O NO PARA
-        # GESTIONAR ERRORES
+    def __init__(self):
+        self._conexion = mysql.connector.connect(user='root', password='',
+                            host='127.0.0.1', database='gestion_guardias')
+        self._cursor = self._conexion.cursor()
+        self._conexion.autocommit = True
 
-    def _vaciar_bbdd(self):
+    def vaciar_bbdd(self):
         vaciar = ['SET FOREIGN_KEY_CHECKS = 0',
                   'TRUNCATE TABLE AULAS',
                   'TRUNCATE TABLE PROFESORES',
@@ -20,13 +24,7 @@ class CargaInicial:
         for truncate in vaciar:
             self._cursor.execute(truncate)
 
-    def _abrir_conexion(self):
-        # todo: ponerse el try
-        conexion = mysql.connector.connect(user='root', password='',
-                      host='127.0.0.1', database='gestion_guardias')
-        conexion.autocommit = True
-        cursor = conexion.cursor()
-        return conexion, cursor
+    
 
     def _generar_profesor(self):
         datos_profesor: list = []
@@ -69,7 +67,6 @@ class CargaInicial:
                 for letra in letras.split(';'):
                     aniadir_curso = (f'INSERT INTO cursos VALUES'
                                      f'("{curso + "-" + letra}")')
-                    print(aniadir_curso)
                     self._cursor.execute(aniadir_curso)
 
     def _cerrar_conexion(self):
@@ -77,10 +74,11 @@ class CargaInicial:
         self._conexion.close()
 
 
-c = CargaInicial()
-c._vaciar_bbdd()
-c.cargar_horas()
-c.cargar_aulas()
-c.cargar_cursos()
-# c.hacer_select()
-c._cerrar_conexion()
+# c = CargaInicial()
+# c.vaciar_bbdd()
+# c.cargar_horas()
+# c.cargar_aulas()
+# c.cargar_cursos()
+# c._generar_profesor()
+# # c.hacer_select()
+# c._cerrar_conexion()
