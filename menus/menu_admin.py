@@ -5,7 +5,6 @@ class MenuAdmin:
               "2. Visualizar el parte de guardias semanal.\n"
               "3. Dar de baja una guardia.\n"
               "4. Dar de alta una guardia.\n"
-              "5. Vaciar la Base de Datos.\n"
-              "6. Ver informe de las guardias.\n"
-              "7. Ver el listado de usuarios.\n"
-              "8. Salir.\n")
+              "5. Ver informe de las guardias.\n"
+              "6. Ver el listado de usuarios.\n"
+              "7. Salir.")

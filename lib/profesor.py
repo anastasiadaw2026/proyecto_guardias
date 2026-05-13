@@ -1,5 +1,6 @@
-import random
 import bcrypt
+
+from claves.conexion_bbdd import CONEXION
 
 
 class Profesor:
@@ -33,27 +34,27 @@ class Profesor:
     def clave_encriptada(self):
         return self._clave_encriptada
 
+    def imprimir_id_nombre_apellidos(self):
+        print(f"{self._id} - {self._nombre} {self._apellidos}")
+
     def _generar_id(self):
-        # el id va a ser la primera letra del nombre y los dos apellidos
-        # juntos to_do en minusculas
         usuario: str = ''
         usuario += self._nombre[0].lower() + self._apellidos.replace(' ',
                                                             '').lower()
         return usuario
 
     def _generar_clave(self):
-        # la clave va a ser nombre 5 números aleatorios
         clave: str = ''
         clave += (self._nombre.replace(' ', '').lower() +
-                  str(random.randint(10000, 99999)))
+                  str(len(self._nombre) + len(self._apellidos)))
         return clave
 
     def _encriptar_clave(self):
-        # bcrypt.checkpw(password_bytes, hash_resultado) -- para comprobar
         clave_bytes = self._clave.encode('utf-8')
         sal = bcrypt.gensalt()
         clave_encriptada = bcrypt.hashpw(clave_bytes, sal)
-        return clave_encriptada.decode('utf-8') # para guardarlo como string
+        return clave_encriptada.decode('utf-8')
+
 
 
 
@@ -61,3 +62,4 @@ class Profesor:
 # apellido = 'Hristea Furtuna'
 # p = Profesor(nombre_1, apellido)
 # print(p._clave, p._clave_encriptada)
+# print(p.autentificar_profesor('napellido_1aapellido_1b', 'nombre11'))
