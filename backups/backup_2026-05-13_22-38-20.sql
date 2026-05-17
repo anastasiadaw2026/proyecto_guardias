@@ -16,7 +16,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `aulas`
+-- Table structure for table `aulas.txt`
 --
 
 DROP TABLE IF EXISTS `aulas`;
@@ -29,13 +29,13 @@ CREATE TABLE `aulas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `aulas`
+-- Dumping data for table `aulas.txt`
 --
 
 LOCK TABLES `aulas` WRITE;
-/*!40000 ALTER TABLE `aulas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `aulas.txt` DISABLE KEYS */;
 INSERT INTO `aulas` VALUES ('102'),('103'),('104'),('105'),('120'),('1ASIR'),('1DAW'),('2SMR'),('AULA DE MÚSICA'),('LABORATORIO DE QUÍMICA');
-/*!40000 ALTER TABLE `aulas` ENABLE KEYS */;
+/*!40000 ALTER TABLE `aulas.txt` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -97,7 +97,7 @@ INSERT INTO `guardias` VALUES ('napellido_1aapellido_1b','2026-02-02','8:55 - 9:
 UNLOCK TABLES;
 
 --
--- Table structure for table `horas`
+-- Table structure for table `horas.txt`
 --
 
 DROP TABLE IF EXISTS `horas`;
@@ -110,13 +110,13 @@ CREATE TABLE `horas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `horas`
+-- Dumping data for table `horas.txt`
 --
 
 LOCK TABLES `horas` WRITE;
-/*!40000 ALTER TABLE `horas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `horas.txt` DISABLE KEYS */;
 INSERT INTO `horas` VALUES ('11:15 - 12:10'),('12:10 - 13:05'),('13:05 - 14:00'),('8:00 - 8:55'),('8:55 - 9:50'),('9:50 - 10:45');
-/*!40000 ALTER TABLE `horas` ENABLE KEYS */;
+/*!40000 ALTER TABLE `horas.txt` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
