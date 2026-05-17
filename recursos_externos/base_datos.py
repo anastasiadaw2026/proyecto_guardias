@@ -55,21 +55,21 @@ class BaseDatos:
         profesores = []
         cursor = CONEXION.cursor()
         try:
-            with open('..\\..\\recursos_externos\\cursos.csv', mode='r',
+            with open('..\\recursos_externos\\cursos.csv', mode='r',
                       encoding='utf-8-sig') as f:
                 for linea in f.readlines():
                     curso, letras = linea.strip().split(',')
                     for letra in letras.strip().split(';'):
                         cursos.append(str(curso + "-" + letra))
-            with open('..\\..\\recursos_externos\\aulas.txt', mode='r',
+            with open('..\\recursos_externos\\aulas.txt', mode='r',
                       encoding='utf-8') as f:
                 for aula in f.readlines():
                     aulas.append(aula.upper().strip())
-            with open('..\\..\\recursos_externos\\horas.txt', mode='r',
+            with open('..\\recursos_externos\\horas.txt', mode='r',
                       encoding='utf-8') as f:
                 for hora in f.readlines():
                     horas.append(hora.strip())
-            with (open('..\\..\\recursos_externos\\profesores.csv', 'r',
+            with (open('..\\recursos_externos\\profesores.csv', 'r',
                        encoding
                   = 'utf-8') as f):
                 for index, line in enumerate(f.readlines()):
@@ -89,7 +89,7 @@ class BaseDatos:
     def guardar_claves_profesores():
         try:
             profesores = BaseDatos.recoger_info_ficheros()[3]
-            with open('../../claves/claves_profesores.txt', 'w', encoding =
+            with open('../claves/claves_profesores.txt', 'w', encoding =
                         'utf-8') as fclaves:
                 for profesor in profesores:
                     fclaves.write(profesor.id + ' - ' + profesor.clave + '\n')
@@ -144,7 +144,7 @@ class BaseDatos:
     def sacar_horas():
         cursor = CONEXION.cursor()
         horas = []
-        seleccionar_horas = ('select nombre from horas.txt '
+        seleccionar_horas = ('select nombre from horas '
                              'order by length(nombre)')
         cursor.execute(seleccionar_horas)
         for nombre in cursor:
@@ -172,7 +172,7 @@ class BaseDatos:
     def sacar_aulas():
         cursor = CONEXION.cursor()
         aulas = []
-        seleccionar_aulas = ('select nombre from aulas.txt '
+        seleccionar_aulas = ('select nombre from aulas '
                              'order by nombre')
         cursor.execute(seleccionar_aulas)
         for nombre in cursor:

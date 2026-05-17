@@ -48,13 +48,6 @@ class Guardia:
                                f'"{self.hora}"')
         cursor = CONEXION.cursor()
         cursor.execute(eliminacion_guardia)
+        filas_afectadas = cursor.rowcount
         cursor.close()
-
-# g = Guardia()
-# g.profesor = Profesor("Nombre 1", "Apellido_1a Apellido_1b")
-# g.hora = '11:15 - 12:10'
-# g.curso = '1BACH-CS'
-# g.clase = '1DAW'
-# g.dia = date(2026, 4,2)
-# g.tarea = Guardia.SI_TAREA
-# g.insertar_guardia()
+        return filas_afectadas

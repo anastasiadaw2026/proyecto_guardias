@@ -39,14 +39,18 @@ class Profesor:
 
     def _generar_id(self):
         usuario: str = ''
-        usuario += self._nombre[0].lower() + self._apellidos.replace(' ',
+        if self._nombre and self._apellidos:
+            usuario += self._nombre[0].lower() + self._apellidos.replace(' ',
                                                             '').lower()
+        else:
+            usuario = ''
         return usuario
 
     def _generar_clave(self):
         clave: str = ''
         clave += (self._nombre.replace(' ', '').lower() +
-                  str(len(self._nombre) + len(self._apellidos)))
+                  str(len(self._nombre.replace(' ', '').lower()) + len(
+                      self._apellidos.replace(' ', '').lower())))
         return clave
 
     def _encriptar_clave(self):
@@ -55,11 +59,3 @@ class Profesor:
         clave_encriptada = bcrypt.hashpw(clave_bytes, sal)
         return clave_encriptada.decode('utf-8')
 
-
-
-
-# nombre_1 = 'Anastasia'
-# apellido = 'Hristea Furtuna'
-# p = Profesor(nombre_1, apellido)
-# print(p._clave, p._clave_encriptada)
-# print(p.autentificar_profesor('napellido_1aapellido_1b', 'nombre11'))
