@@ -1,6 +1,6 @@
 import unittest
 
-from recursos_externos.base_datos import BaseDatos
+from recursos_externos.bbdd.base_datos import BaseDatos
 
 
 class TestBaseDatos(unittest.TestCase):

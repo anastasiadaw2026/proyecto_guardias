@@ -1,3 +1,8 @@
+from token import COLONEQUAL
+
+from colores import Colores
+
+
 class Menus:
     class ConstantesMenu:
         UNO = '1'
@@ -12,7 +17,8 @@ class Menus:
 
     @staticmethod
     def imprimir_menu_inicio():
-        print(f"¡Bienvenido a la página de gestión de las guardias!\n"
+        print(f"{Colores.MAGENTA}¡Bienvenido a la página de gestión de las "
+              f"guardias! {Colores.RESET}\n"
               f"Para empezar indicanos quién eres, introduciendo una de las "
               f"siguientes opciones:\n"
               f"{Menus.ConstantesMenu.UNO}. Administrador.\n"

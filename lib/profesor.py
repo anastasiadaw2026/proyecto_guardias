@@ -35,7 +35,7 @@ class Profesor:
         return self._clave_encriptada
 
     def imprimir_id_nombre_apellidos(self):
-        print(f"{self._id} - {self._nombre} {self._apellidos}")
+        print(f"{self._id.ljust(37)}{self._nombre} {self._apellidos}")
 
     def _generar_id(self):
         usuario: str = ''

@@ -1,7 +1,7 @@
 import unittest
 
 from lib.profesor import Profesor
-from recursos_externos.base_datos import BaseDatos
+from recursos_externos.bbdd.base_datos import BaseDatos
 
 class TestRecogerInfoFicheros(unittest.TestCase):
     # todo: preguntar al profe pq no va

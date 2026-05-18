@@ -32,22 +32,34 @@ class Guardia:
                 f'{self.ficheros if self.ficheros else "No hay ficheros adjuntos"}')
 
     def insertar_guardia(self):
-        cursor = CONEXION.cursor()
-        insertion = (f'insert into guardias values('
-                     f'"{self.id.id}", "{self.dia}", "{self.hora}",'
-                     f'"{self.curso.nombre}", "{self.clase}", '
-                     f'"{self.tarea}", "{self.ficheros}" '
-                     f')')
-        cursor.execute(insertion)
-        cursor.close()
+        cursor = None
+        try:
+            cursor = CONEXION.cursor()
+            insertion = (f'insert into guardias values('
+                         f'"{self.id.id}", "{self.dia}", "{self.hora}",'
+                         f'"{self.curso}", "{self.clase}", '
+                         f'"{self.tarea}", "{self.ficheros}" '
+                         f')')
+            cursor.execute(insertion)
+        except Exception as e:
+            return e
+        finally:
+            if cursor:
+                cursor.close()
 
     def borrar_guardia(self):
-        eliminacion_guardia = (f'DELETE FROM GUARDIAS where id = '
-                               f'"{self.id.id}" '
-                               f'and dia = "{self.dia}" and hora = '
-                               f'"{self.hora}"')
-        cursor = CONEXION.cursor()
-        cursor.execute(eliminacion_guardia)
-        filas_afectadas = cursor.rowcount
-        cursor.close()
-        return filas_afectadas
+        cursor = None
+        try:
+            eliminacion_guardia = (f'DELETE FROM GUARDIAS where id = '
+                                   f'"{self.id.id}" '
+                                   f'and dia = "{self.dia}" and hora = '
+                                   f'"{self.hora}"')
+            cursor = CONEXION.cursor()
+            cursor.execute(eliminacion_guardia)
+            filas_afectadas = cursor.rowcount
+            return filas_afectadas
+        except Exception as e:
+            return e
+        finally:
+            if cursor:
+                cursor.close()

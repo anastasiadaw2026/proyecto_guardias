@@ -1,4 +1,5 @@
-from recursos_externos.base_datos import BaseDatos
+from colores import Colores
+from recursos_externos.bbdd.base_datos import BaseDatos
 from lib.administrador import Administrador
 from lib.guardia import Guardia
 from lib.profesor import Profesor
@@ -10,20 +11,19 @@ from claves import claves_admin as ad
 class App:
     FINES_SEMANA = (5, 6)
     NUM_DIAS_SEMANA = 7
-    SEPARADOR = '·' * 16
     fin = False
+    SEPARADOR = Colores.ROSA + '·' * 16 + Colores.RESET
 
     def main(self):
         while not App.fin:
-            print()
             print(App.SEPARADOR)
             Menus.imprimir_menu_inicio()
             opcion_elegida = input(': ')
             print(App.SEPARADOR)
             match opcion_elegida.strip():
                 case Menus.ConstantesMenu.UNO:
-                    print('Para registrarte y poder acceder a los derechos de '
-                          'Administrador introduce el id y la clave.')
+                    print(f'Para registrarte y poder acceder a los '
+                          f'derechos de Administrador introduce el id y la clave.')
                     id_admin = input('ID: ').strip()
                     clave_admin = input('CLAVE: ').strip()
                     if (Administrador(ad.ID, ad.CLAVE) ==
@@ -96,8 +96,9 @@ class App:
             case Menus.ConstantesMenu.SEIS:
                 contador = 1
                 profesores = BaseDatos.sacar_profesores()
-                print('Profesores registrados en el sistema:\n'
-                      'ID                   NOMBRE/APELLIDOS ') #todo
+                print(f'Profesores registrados en el sistema:\n'
+                      f'{Colores.ROJO}{"ID".ljust(40)}NOMBRE/APELLIDO'
+                      f'S{Colores.RESET}')
                 for profesor in profesores:
                     print(contador, end='. ')
                     profesor.imprimir_id_nombre_apellidos()
@@ -213,7 +214,7 @@ class App:
         print(f'Si hay tarea introduce {Menus.ConstantesMenu.SEGUIR}, '
               f'si no introduce cualquier otra letra o dígito.')
         opcion = input(': ')
-        if opcion.lower().upper() == Menus.ConstantesMenu.SEGUIR:
+        if opcion.strip().upper() == Menus.ConstantesMenu.SEGUIR:
             guardia.tarea = Guardia.SI_TAREA
         print(App.SEPARADOR)
         print('Por último si quieres añadir algún fichero introduce su '
@@ -296,13 +297,17 @@ class App:
         guardias = BaseDatos.seleccionar_guardias_por_fechas(
                                        fecha_inicio, fecha_fin)
         print(App.SEPARADOR)
-        if guardias:
-            for guardia in guardias:
-                print(guardia)
-        else:
-            print('No se encontró ninguna guardía para esta semana.')
+        self.imprimir_guardias(guardias)
         self.cambiar_semana()
         self.acabar_operacion()
+
+    def imprimir_guardias(self, guardias: list[Guardia]):
+        if guardias:
+            for guardia in guardias:
+                print(App.SEPARADOR)
+                print(guardia)
+        else:
+            print('No se encontró ninguna guardía para estas fechas.')
 
     def cambiar_semana(self):
         print(App.SEPARADOR)
@@ -321,11 +326,7 @@ class App:
                 guardias = BaseDatos.seleccionar_guardias_por_fechas(
                                                    fecha_inicio, fecha_fin)
                 print(App.SEPARADOR) #todo
-                if guardias:
-                    for guardia in guardias:
-                        print(guardia)
-                else:
-                    print('No se encontró ninguna guardía para esta semana.')
+                self.imprimir_guardias(guardias)
             case Menus.ConstantesMenu.ACABAR:
                 self.salir()
             case _:

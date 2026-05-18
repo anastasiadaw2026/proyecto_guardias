@@ -1,7 +1,7 @@
 import unittest
 import bcrypt
 from claves.conexion_bbdd import CONEXION
-from recursos_externos.base_datos import BaseDatos
+from recursos_externos.bbdd.base_datos import BaseDatos
 
 
 class TestAutentificarProfesor(unittest.TestCase):
